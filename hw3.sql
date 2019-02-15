@@ -1,18 +1,14 @@
 SELECT 'ФИО: Ковалева Ирина';
 
-""
+'Оконные функции'
 select userId, movieId,
        (rating - min(rating) over (partition by userId))/(max(rating) over (partition by userid) - min(rating) over (partition by userId)) as normed_rating,
        avg(rating) over (partition by userId) as avg_rating
 from (select distinct userid, movieId, rating from ratings) as rate
 limit 30;
 
-create table if not exists "keywords" (
-  movieid bigint,
-  tags text
-);
-
-""
+                                                                                                                     
+'ETL'
 
 create table if not exists "keywords" (
   movieid bigint,
