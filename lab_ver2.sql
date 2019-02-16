@@ -25,3 +25,14 @@ select department.name, department_id, cnt_emp from (
   select distinct department_id, count(name) over (partition by department_id) cnt_emp from Employee order by department_id) dep_emp
 inner join Department on Department.id=dep_emp.department_id
 where cnt_emp>=3;
+
+
+
+
+
+
+SELECT COUNT(*)
+FROM ratings RIGHT JOIN links
+ON links.movieid = ratings.movieid
+WHERE ratings.rating IS NULL
+LIMIT 10;
