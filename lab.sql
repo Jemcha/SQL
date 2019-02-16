@@ -30,3 +30,7 @@ FROM (SELECT id, department_id, name, num_public, RANK() OVER (PARTITION BY depa
 FROM employee) e
 INNER JOIN department d ON e.department_id = d.id
 WHERE e.rank = 1
+
+with avg_dep as (select department_id, avg(num_public) as avg_num from Employee group by department_id having department_id in(
+select department_id from Employee group by department_id having count(distinct cheif_doc_id)>1))
+select name, department_id, avg_num from avg_dep inner join Department on Department.id=avg_dep.department_id;                                                       
