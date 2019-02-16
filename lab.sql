@@ -18,3 +18,9 @@ group by department_id
 order by department_id) as cnt_in_dep
 where cnt_emp>=3)
   select department_id, Department.name, cnt_emp from cnt3_in_dep join department on department.id=cnt3_in_dep.department_id;
+                                                              
+with max_cnt as (
+select department_id, sum(num_public) as cnt_pub
+from Employee
+group by department_id
+  order by cnt_pub desc) select department_id, cnt_pub, department.name from max_cnt join department on Department.id=max_cnt.department_id where cnt_pub in (select max(cnt_pub) from max_cnt limit 1) ;
