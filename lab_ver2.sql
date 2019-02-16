@@ -26,13 +26,15 @@ select department.name, department_id, cnt_emp from (
 inner join Department on Department.id=dep_emp.department_id
 where cnt_emp>=3;
 
-
-
-
-
-
-SELECT COUNT(*)
-FROM ratings RIGHT JOIN links
-ON links.movieid = ratings.movieid
-WHERE ratings.rating IS NULL
-LIMIT 10;
+---c
+--ver1
+with max_cnt as (
+select department_id, sum(num_public) as cnt_pub
+from Employee
+group by department_id
+  order by cnt_pub desc) select department_id, cnt_pub, department.name from max_cnt join department on Department.id=max_cnt.department_id where cnt_pub in (select max(cnt_pub) from max_cnt limit 1) ;
+--ver2
+select distinct department_id, department.name, sum_pub  from (
+  select distinct department_id, sum(num_public) over (partition by department_id) sum_pub from Employee order by department_id) as dep_pub
+inner join Department on Department.id=dep_pub.department_id
+where sum_pub in (select sum(num_public) over (partition by department_id) as sum_pubb from Employee order by sum_pubb desc limit 1);
