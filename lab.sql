@@ -10,3 +10,11 @@ from Employee
 group by department_id
 order by department_id) select department.name, cnt_cheif_doc from count_cheif join Department on Department.id=count_cheif.department_id;
                                                               
+with cnt3_in_dep as (
+     select department_id, cnt_emp from (
+select department_id, count(department_id) as cnt_emp
+from Employee
+group by department_id
+order by department_id) as cnt_in_dep
+where cnt_emp>=3)
+  select department_id, Department.name, cnt_emp from cnt3_in_dep join department on department.id=cnt3_in_dep.department_id;
