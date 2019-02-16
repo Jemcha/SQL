@@ -38,3 +38,14 @@ select distinct department_id, department.name, sum_pub  from (
   select distinct department_id, sum(num_public) over (partition by department_id) sum_pub from Employee order by department_id) as dep_pub
 inner join Department on Department.id=dep_pub.department_id
 where sum_pub in (select sum(num_public) over (partition by department_id) as sum_pubb from Employee order by sum_pubb desc limit 1);
+
+----e
+--ver1
+with avg_dep as (select department_id, avg(num_public) as avg_num from Employee group by department_id having department_id in(
+select department_id from Employee group by department_id having count(distinct cheif_doc_id)>1))
+select name, department_id, avg_num from avg_dep inner join Department on Department.id=avg_dep.department_id;
+--ver2
+select distinct department_id, department.name, avg_pub from (
+select distinct department_id, cheif_doc_id, avg(num_public) over (partition by department_id) avg_pub, rank() over (partition by department_id order by cheif_doc_id) cnt_cf from Employee) cnt_dep
+inner join Department on cnt_dep.department_id=Department.id
+where cnt_cf>1;
