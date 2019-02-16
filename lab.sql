@@ -24,3 +24,9 @@ select department_id, sum(num_public) as cnt_pub
 from Employee
 group by department_id
   order by cnt_pub desc) select department_id, cnt_pub, department.name from max_cnt join department on Department.id=max_cnt.department_id where cnt_pub in (select max(cnt_pub) from max_cnt limit 1) ;
+
+SELECT d.id, d.name, e.name, e.num_public 
+FROM (SELECT id, department_id, name, num_public, RANK() OVER (PARTITION BY department_id ORDER BY num_public) as rank
+FROM employee) e
+INNER JOIN department d ON e.department_id = d.id
+WHERE e.rank = 1
