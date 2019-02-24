@@ -22,7 +22,7 @@ select books.name, avg from avg_rate inner join Books on Books.id=avg_rate.book_
 where avg in( select max(avg) from avg_rate limit 1);
 
 
-6. Dывести назнвание книги с максимальным количеством оценок и среднюю оценку
+6. Вывести список пользователей с максимальным количеством оценок и среднюю оценку
 
 
 
