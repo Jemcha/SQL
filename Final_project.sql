@@ -2,7 +2,7 @@
 
 Select count(*) from book_ratings right join Books on books.id=Book_ratings.book_id where Book_ratings.rating is null ;
 
-2. Вывести список  и их средний рейтинг
+2. Вывести список книг и их средний рейтинг
 
 
 3. Вывести название жанров, количество книг и средний рейтинг каждого жанра
