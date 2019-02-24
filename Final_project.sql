@@ -44,7 +44,8 @@ select distinct authors.name, count(distinct Books.name), avg(rating) from Books
 
 9. Вывести список авторов, у которых есть книги хотя бы в 2 жанрах и количество их книг
 
-
+select authors.name,  rnk_cnt.cnt from (select author_id, genre_id, count(id) over (partition by author_id) cnt, rank() over (partition by author_id order by genre_id desc) rnk from Books) rnk_cnt
+inner join Authors on Authors.id=rnk_cnt.author_id where rnk_cnt.rnk>1;
 
 10. Вывести список жанров, для каждого список книг с максимальной средней оценкой, авторов этих книг и эту оценку
 
