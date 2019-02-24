@@ -49,4 +49,7 @@ inner join Authors on Authors.id=rnk_cnt.author_id where rnk_cnt.rnk>1;
 
 10. Вывести список жанров, для каждого список книг с максимальной средней оценкой, авторов этих книг и эту оценку
 
-
+select authors.name, inters.name, year from( (select year, author_id, name from books where year>1995)
+intersect
+(select year, author_id, name from Books where year<2000)) as inters inner join Authors on inters.author_id=Authors.id
+;
