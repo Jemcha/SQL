@@ -8,7 +8,8 @@ Select name, avg(rating) from Book_ratings right join Books on Books.id=Book_rat
 
 3. Вывести название жанров, количество книг и средний рейтинг каждого жанра
 
-
+select Genres.name, count(distinct Books.id), avg(rating) from books inner join Genres on Books.genre_id=Genres.id 
+inner join Book_ratings on Book_ratings.book_id=Books.id group by Genres.id;
 
 4. Вывести список логинов 3 пользователей, у которых средний рейтинг выше 3.5
 
