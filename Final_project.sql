@@ -24,9 +24,17 @@ where avg in( select max(avg) from avg_rate limit 1);
 
 6. Вывести список пользователей с максимальным количеством оценок и среднюю оценку
 
+select login, cnt, avg from 
+(select distinct reader_id, count(rating) over (partition by reader_id) as cnt, avg(rating) over (partition by reader_id) as avg 
+from book_ratings) as cnt_avg
+inner join Readers on cnt_avg.reader_id=Readers.id 
+where cnt in (select count(rating) over (partition by reader_id) cnt_rt from Book_ratings order by cnt_rt desc limit 1);
 
 
 7. Вывести названия книг, у которых минимум 3 оценки и средний рейтинг выше 3.5
+
+
+
 8. Вывести список авторов, количество их книг и средний рейтинг книг этого автора
 9. Вывести список авторов, у которых есть книги хотя бы в 2 жанрах и количество их книг
 10. Вывести список жанров, автора с макимальной оценкой у книги выбранного жанра и эту оценку
