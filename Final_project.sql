@@ -39,7 +39,13 @@ from Book_ratings inner join Books on Books.id=Book_ratings.book_id) cnt_avg whe
 
 8. Вывести список авторов, количество их книг и средний рейтинг книг этого автора
 
-
+select distinct authors.name, count(distinct Books.name), avg(rating) from Books left join Book_ratings on Books.id=Book_ratings.book_id
+  inner join Authors on Books.author_id=Authors.id group by Authors.name;
 
 9. Вывести список авторов, у которых есть книги хотя бы в 2 жанрах и количество их книг
+
+
+
 10. Вывести список жанров, автора с макимальной оценкой у книги выбранного жанра и эту оценку
+
+
