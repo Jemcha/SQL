@@ -34,8 +34,12 @@ where cnt in (select count(rating) over (partition by reader_id) cnt_rt from Boo
 
 7. Вывести названия книг, у которых минимум 3 оценки и средний рейтинг выше 3.5
 
-
+select name, avg, cnt from ( select distinct books.name, count(rating) over (partition by book_id) cnt, avg(rating) over (partition by book_id) avg
+from Book_ratings inner join Books on Books.id=Book_ratings.book_id) cnt_avg where cnt_avg.cnt>2 AND cnt_avg.avg>3.5;
 
 8. Вывести список авторов, количество их книг и средний рейтинг книг этого автора
+
+
+
 9. Вывести список авторов, у которых есть книги хотя бы в 2 жанрах и количество их книг
 10. Вывести список жанров, автора с макимальной оценкой у книги выбранного жанра и эту оценку
