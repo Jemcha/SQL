@@ -10,7 +10,7 @@ Select name, avg(rating) from Book_ratings right join Books on Books.id=Book_rat
 
 
 
-4. Вывести список логинов 3 пользователей, у который средний рейтинг выше 3.5
+4. Вывести список логинов 3 пользователей, у которых средний рейтинг выше 3.5
 
 select login, avg(rating) from Readers inner join Book_ratings on readers.id=Book_ratings.reader_id  
 group by reader_id, login having avg(rating)>3.5 limit 3;
